@@ -1,7 +1,24 @@
 import { Box, Typography, Stack, Button } from '@mui/material'
 import TrackChangesIcon from '@mui/icons-material/TrackChanges'
+import { useEffect } from 'react'
+import { useWeeklyGoal } from '@/hooks/useWeeklyGoal'
+import { formatDate } from '@/constants/format'
+import { getWeekDates } from '@/utils/getDates'
 
-export default function WeeklyGoal() {
+interface Props {
+  selectedDate: string
+}
+
+export default function WeeklyGoal({  selectedDate }: Props) {
+  const { goal, fetchWeeklyGoal, loading } = useWeeklyGoal()
+  const weekDates = getWeekDates(new Date(selectedDate))
+
+  useEffect(() => {
+    console.log('first date', weekDates[0].date)
+    const startOfWeek = formatDate(weekDates[0].date)
+    fetchWeeklyGoal(startOfWeek)
+  }, [])
+  
   return (
     <Box sx={{ mt: 4, width: '100%' }}>
       <Box
@@ -19,7 +36,7 @@ export default function WeeklyGoal() {
       >
         <TrackChangesIcon sx={{ fontSize: 32 }} />
         <Typography sx={{ color: 'black', fontSize: '14px', fontWeight: 'medium' }}>
-          이번 주는 <strong>‘멘델스존 바이올린 협주곡 제 1악장’</strong>의 음정을 안정시키는 데 집중해보아요.
+          {goal ? goal.summary : '주간 목표가 아직 설정되지 않았어요.'}
         </Typography>
       </Box>
     </Box>

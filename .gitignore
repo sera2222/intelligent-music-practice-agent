@@ -1,0 +1,4 @@
+.env
+back/app/db/chroma_data
+__pycache__
+back/app/db/data

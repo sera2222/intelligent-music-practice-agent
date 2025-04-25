@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { addDays, startOfWeek, format } from 'date-fns'
 import { getWeekDates } from '@/utils/getDates'
 import CalendarWeekView from '@/components/CalendarWeeklyView'
@@ -11,9 +11,10 @@ const date = new Date().toLocaleDateString();
 interface Props {
   selectedDate: string
   setSelectedDate: (date: string) => void
+  saveTrigger: number
 }
 
-export default function CalendarWrapper({selectedDate, setSelectedDate}: Props) {
+export default function CalendarWeeklyWrapper({selectedDate, setSelectedDate, saveTrigger}: Props) {
 
   const handleDateClick = (date: string) => {
     setSelectedDate(date)
@@ -50,6 +51,7 @@ export default function CalendarWrapper({selectedDate, setSelectedDate}: Props) 
             onDateClick={handleDateClick}
             onPrevClick={handlePrevClick}
             onNextClick={handleNextClick}
+            saveTrigger={saveTrigger}
         />
     </Stack>
   )
